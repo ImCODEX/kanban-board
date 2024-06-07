@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "kanban-chart.fullname" . }}-test-connection"
+  labels:
+    {{- include "kanban-chart.labels" . | nindent 4 }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ include "kanban-chart.name" . }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    helm.sh/chart: {{ include "kanban-chart.chart" . }}
+    test: "connection"
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "kanban-chart.fullname" . }}-app:{{ .Values.service.port }}']
+  restartPolicy: Never
