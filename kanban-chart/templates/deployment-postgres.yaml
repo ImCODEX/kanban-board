@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kanban-postgres-deployment
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kanban-postgres
+  template:
+    metadata:
+      labels:
+        app: kanban-postgres
+    spec:
+      containers:
+        - name: kanban-postgres
+          image: {{ .Values.postgres.image }}
+          resources:
+            requests:
+              memory: {{ .Values.postgres.resources.requests.memory }}
+            limits:
+              memory: {{ .Values.postgres.resources.limits.memory }}
+          ports:
+            - containerPort: 5432
+          env:
+            - name: DB_SERVER
+              value: kanban-postgres
+            - name: POSTGRES_DB
+              value: {{ .Values.postgres.db }}
+            - name: POSTGRES_USER
+              value: {{ .Values.postgres.username }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.postgres.password }}
+          volumeMounts:
+            - name: kanban-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: kanban-data
+          persistentVolumeClaim:
+            claimName: kanban-data-pvc

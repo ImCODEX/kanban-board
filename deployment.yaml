@@ -1,0 +1,92 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kanban-postgres-deployment
+  namespace: kanban-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kanban-postgres
+  template:
+    metadata:
+      labels:
+        app: kanban-postgres
+    spec:
+      containers:
+        - name: kanban-postgres
+          image: postgres:9.6-alpine
+          resources:
+            requests:
+              memory: "512Mi"
+            limits:
+              memory: "512Mi"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: DB_SERVER
+              value: kanban-postgres
+            - name: POSTGRES_DB
+              value: kanban
+            - name: POSTGRES_USER
+              value: kanban
+            - name: POSTGRES_PASSWORD
+              value: kanban
+          volumeMounts:
+            - name: kanban-data
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: kanban-data
+          persistentVolumeClaim:
+            claimName: kanban-data-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kanban-app-deployment
+  namespace: kanban-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kanban-app
+  template:
+    metadata:
+      labels:
+        app: kanban-app
+    spec:
+      containers:
+        - name: kanban-app
+          image: imcodex/kanban-board-kanban-app:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_SERVER
+              value: kanban-postgres
+            - name: POSTGRES_DB
+              value: kanban
+            - name: POSTGRES_USER
+              value: kanban
+            - name: POSTGRES_PASSWORD
+              value: kanban
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kanban-ui-deployment
+  namespace: kanban-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kanban-ui
+  template:
+    metadata:
+      labels:
+        app: kanban-ui
+    spec:
+      containers:
+        - name: kanban-ui
+          image: imcodex/kanban-ui:latest
+          ports:
+            - containerPort: 80

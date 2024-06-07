@@ -33,17 +33,23 @@ export class KanbanDialogComponent implements OnInit {
   } 
 
   save() {
-    this.title = this.form.get('title').value;
-    if (this.title) {
+    if (this.form.valid) {
+      this.title = this.form.get('title').value;
       this.kanbanService.saveNewKanban(this.title).subscribe(
-
         response => {
-          console.log(response)
+          console.log(response);
+          this.dialogRef.close(); // Close the dialog on successful save
+          setTimeout(() => {
+          }, 2000);
+        },
+        error => {
+          console.error('Save failed:', error);
         }
-      )
+      );
+    } else {
+      console.error('Form is not valid.');
     }
-    this.dialogRef.close();
-    window.location.reload();
   }
+  
 
 }

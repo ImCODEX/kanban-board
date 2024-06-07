@@ -1,0 +1,16 @@
+storage:
+  type: memory
+provisionDataStore:
+  cassandra: false
+agent:
+  enabled: false
+collector:
+  enabled: false
+query:
+  enabled: false
+allInOne:
+  enabled: true
+  ingress:
+    enabled: true
+    hosts:
+      - localhost:30007

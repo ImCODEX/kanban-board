@@ -7,20 +7,24 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <changeSet id="1" author="Wojtek">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="kanban"/>
+            </not>
+        </preConditions>
         <sqlFile path="01_init_kanban.sql"
                  relativeToChangelogFile="true"
                  splitStatements="true"
                  stripComments="true"/>
-
-        <comment>Create table with Kanaban info</comment>
+        <comment>Create table with Kanban info</comment>
     </changeSet>
 
+    <!-- Other changeSets remain unchanged -->
     <changeSet id="2" author="Wojtek">
         <sqlFile path="02_init_task.sql"
                  relativeToChangelogFile="true"
                  splitStatements="true"
                  stripComments="true"/>
-
         <comment>Create table with task info</comment>
     </changeSet>
 
@@ -29,7 +33,6 @@
                  relativeToChangelogFile="true"
                  splitStatements="true"
                  stripComments="true"/>
-
         <comment>Add kanban_id column to task table</comment>
     </changeSet>
 
@@ -38,9 +41,7 @@
                  relativeToChangelogFile="true"
                  splitStatements="true"
                  stripComments="true"/>
-
         <comment>Add status column to task table</comment>
     </changeSet>
 
 </databaseChangeLog>
-

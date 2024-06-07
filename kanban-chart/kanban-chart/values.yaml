@@ -1,0 +1,25 @@
+namespace: kanban-namespace
+
+postgres:
+  image: postgres:9.6-alpine
+  db: kanban
+  username: kanban
+  password: kanban
+  resources:
+    requests:
+      memory: "512Mi"
+    limits:
+      memory: "512Mi"
+
+kanbanApp:
+  image: imcodex/kanban-board-kanban-app:latest
+  port: 8080
+
+kanbanUI:
+  image: imcodex/kanban-ui:latest
+  port: 80
+  nodePort: 30007
+
+storage:
+  size: 1Gi
+  path: /var/lib/postgresql/data
