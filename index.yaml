@@ -3,22 +3,12 @@ entries:
   kanban-chart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-06-07T15:59:49.059135+03:00"
+    created: "2024-06-07T16:04:03.192425+03:00"
     description: A Helm chart for Kubernetes
-    digest: d631a6e15b44a4e08e4dcd9eb5b88a60beec60623b55eefdd50106ea4f5d58ea
+    digest: c90e5ef92d19e5fc599499db97c871a7aa868ad4523169ef5bb8ace43e0a1b09
     name: kanban-chart
     type: application
     urls:
     - https://imcodex.github.io/kanban-board/kanban-chart-0.1.0.tgz
     version: 0.1.0
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2024-06-07T15:59:49.059963+03:00"
-    description: A Helm chart for Kubernetes
-    digest: d631a6e15b44a4e08e4dcd9eb5b88a60beec60623b55eefdd50106ea4f5d58ea
-    name: kanban-chart
-    type: application
-    urls:
-    - https://imcodex.github.io/kanban-board/kanban-chart/kanban-chart-0.1.0.tgz
-    version: 0.1.0
-generated: "2024-06-07T15:59:49.0579+03:00"
+generated: "2024-06-07T16:04:03.191345+03:00"
